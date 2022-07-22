@@ -1,0 +1,84 @@
+:root .Component {
+  --range-dimension: 8px;
+}
+
+/* ----- Input field general ----- */
+
+.Component {
+  display:    flex;
+  box-sizing: border-box;
+  position:   relative;
+}
+
+.Component:global(.range) {
+  display:    flex;
+  flex-flow:  column;
+  box-sizing: border-box;
+  position:   relative;
+  flex:       0 0 auto;
+}
+
+.Component:global(.range .range-label) {
+  display:    flex;
+  flex-flow:  column;
+  box-sizing: border-box;
+  position:   relative;
+}
+
+.Component:global(.range .range-bar) {
+  display:     flex;
+  flex:        1 1 auto;
+  box-sizing:  border-box;
+  position:    relative;
+  border:      1px solid black;
+  cursor:      pointer;
+  user-select: none;
+}
+
+.Component:global(.range .range-cursor) {
+  display:          flex;
+  box-sizing:       border-box;
+  position:         absolute;
+  border:           1px solid black;
+  background-color: white;
+  transform:        translate(-50%, -50%);
+
+}
+
+/* ----- Horizontal range ----- */
+
+.Component:global(.range[data-vertical="false"]) {
+  flex-flow:    column;
+  grid-row-gap: 10px;
+  width:        100%;
+}
+
+.Component:global(.range[data-vertical="false"] .range-bar) {
+  height: var(--range-dimension);
+}
+
+.Component:global(.range[data-vertical="false"] .range-cursor) {
+  width:  calc(var(--range-dimension) / 2 + 4px);
+  height: calc(var(--range-dimension) + 8px);
+  top:    50%;
+}
+
+/* ----- Vertical range ----- */
+
+.Component:global(.range[data-vertical="true"]) {
+  flex-flow:       row;
+  grid-column-gap: 10px;
+  height:          100%;
+}
+
+.Component:global(.range[data-vertical="true"] .range-bar) {
+  flex:  1 1 auto;
+  width: var(--range-dimension);
+}
+
+.Component:global(.range[data-vertical="true"] .range-cursor) {
+  width:  calc(var(--range-dimension) + 8px);
+  height: calc(var(--range-dimension) / 2 + 4px);
+  left:   50%;
+}
+
