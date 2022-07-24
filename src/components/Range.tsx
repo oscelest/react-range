@@ -6,10 +6,10 @@ function Range(props: RangeProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   if (props.vertical) {
-    style.top = `${(1 - value / max) * 100}%`
+    style.top = `${(1 - value / max) * 100}%`;
   }
   else {
-    style.left = `${value / max * 100}%`
+    style.left = `${value / max * 100}%`;
   }
 
   const classes = [Style.Component, "range"];

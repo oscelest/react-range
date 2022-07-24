@@ -12,10 +12,10 @@
 
 .Component:global(.range) {
   display:    flex;
+  flex:       0 0 auto;
   flex-flow:  column;
   box-sizing: border-box;
   position:   relative;
-  flex:       0 0 auto;
 }
 
 .Component:global(.range .range-label) {
@@ -39,10 +39,10 @@
   display:          flex;
   box-sizing:       border-box;
   position:         absolute;
-  border:           1px solid black;
-  background-color: white;
+  z-index:          100;
   transform:        translate(-50%, -50%);
-
+  background-color: white;
+  border:           1px solid black;
 }
 
 /* ----- Horizontal range ----- */
