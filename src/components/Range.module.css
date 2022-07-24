@@ -59,7 +59,7 @@
 
 .Component:global(.range[data-vertical="false"] .range-cursor) {
   width:  calc(var(--range-dimension) / 2 + 4px);
-  height: calc(var(--range-dimension) + 8px);
+  height: calc(var(--range-dimension) + 6px);
   top:    50%;
 }
 
@@ -77,7 +77,7 @@
 }
 
 .Component:global(.range[data-vertical="true"] .range-cursor) {
-  width:  calc(var(--range-dimension) + 8px);
+  width:  calc(var(--range-dimension) + 6px);
   height: calc(var(--range-dimension) / 2 + 4px);
   left:   50%;
 }
