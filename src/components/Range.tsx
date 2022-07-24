@@ -2,11 +2,17 @@ import React, {useRef, ReactNode} from "react";
 import Style from "./Range.module.css";
 
 function Range(props: RangeProps) {
-  const {min = 0, max = 100, value = min, vertical = false, children, onChange, ...component_props} = props;
+  const {min = 0, max = 100, value = min, vertical = false, className, style = {}, children, onChange, ...component_props} = props;
   const ref = useRef<HTMLDivElement>(null);
-  const style: React.CSSProperties = props.vertical ? {"top": `${(1 - value / max) * 100}%`} : {"left": `${value / max * 100}%`};
-  const classes = [Style.Component, "range"];
 
+  if (props.vertical) {
+    style.top = `${(1 - value / max) * 100}%`
+  }
+  else {
+    style.left = `${value / max * 100}%`
+  }
+
+  const classes = [Style.Component, "range"];
   if (props.className) classes.push(props.className);
 
   return (
