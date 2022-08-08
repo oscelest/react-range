@@ -1,29 +1,30 @@
-import React, {useRef, ReactNode} from "react";
+import React, {useRef, ReactNode, CSSProperties} from "react";
 import Style from "./Range.module.css";
 
 function Range(props: RangeProps) {
-  const {min = 0, max = 100, value = min, vertical = false, className, style = {}, children, onChange, ...component_props} = props;
+  const {min = 0, max = 100, value = min, vertical = false, className, children, onChange, ...component_props} = props;
   const ref = useRef<HTMLDivElement>(null);
 
+  const cursor_style = {} as CSSProperties;
   if (props.vertical) {
-    style.top = `${(1 - value / max) * 100}%`;
+    cursor_style.top = `${(1 - value / max) * 100}%`;
   }
   else {
-    style.left = `${value / max * 100}%`;
+    cursor_style.left = `${value / max * 100}%`;
   }
 
   const classes = [Style.Component, "range"];
   if (props.className) classes.push(props.className);
 
   return (
-    <div className={classes.join(" ")} data-vertical={vertical} {...component_props}>
+    <div {...component_props} className={classes.join(" ")} data-vertical={vertical}>
       {!!children &&
         <div className={"range-label"}>
           {children}
         </div>
       }
       <div className={"range-bar"} ref={ref} onMouseDown={onBarMouseDown}>
-        <div className={"range-cursor"} style={style}/>
+        <div className={"range-cursor"} style={cursor_style}/>
       </div>
     </div>
   );
@@ -60,7 +61,7 @@ function Range(props: RangeProps) {
   }
 }
 
-export interface RangeProps extends Omit<React.HTMLProps<HTMLDivElement>, "onChange"> {
+export interface RangeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
   min?: number;
   max?: number;
   value?: number;
