@@ -15,10 +15,10 @@ export function Range(props: RangeProps) {
   
   const cursor_style = {} as CSSProperties;
   if (props.vertical) {
-    cursor_style.top = `${(max < min ? (100 - percentage) : percentage)}%`;
+    cursor_style.top = `${(max >= min ? (100 - percentage) : percentage)}%`;
   }
   else {
-    cursor_style.left = `${(max >= min ? percentage : (100 - percentage))}%`;
+    cursor_style.left = `${(max < min ? percentage : (100 - percentage))}%`;
   }
   
   const classes = [Style.Component, "range"];
@@ -55,14 +55,14 @@ export function Range(props: RangeProps) {
       const {top, height} = ref.current.getBoundingClientRect();
       const cursor_y = Math.min(Math.max(0, event.pageY - top), height);
       const percentage = cursor_y / height;
-      const actual_percentage = max >= min ? percentage : 1 - percentage;
+      const actual_percentage = max < min ? percentage : 1 - percentage;
       onChange?.(actual_percentage * span + lowest);
     }
     else {
       const {left, width} = ref.current.getBoundingClientRect();
       const cursor_x = Math.min(Math.max(0, event.pageX - left), width);
       const percentage = cursor_x / width;
-      const actual_percentage = max >= min ? percentage : 1 - percentage;
+      const actual_percentage = max < min ? percentage : 1 - percentage;
       onChange?.(actual_percentage * span + lowest);
     }
   }
