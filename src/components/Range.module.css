@@ -1,84 +1,53 @@
-:root .Component {
-  --range-dimension: 8px;
-}
-
 /* ----- Input field general ----- */
 
 .Component {
-  display:    flex;
-  box-sizing: border-box;
-  position:   relative;
-}
-
-.Component:global(.range) {
-  display:    flex;
-  flex:       0 0 auto;
-  flex-flow:  column;
-  box-sizing: border-box;
-  position:   relative;
-}
-
-.Component:global(.range .range-label) {
-  display:    flex;
-  flex-flow:  column;
-  box-sizing: border-box;
-  position:   relative;
-}
-
-.Component:global(.range .range-bar) {
-  display:     flex;
-  flex:        1 1 auto;
   box-sizing:  border-box;
-  position:    relative;
+  position:    relative !important;
   border:      1px solid black;
   cursor:      pointer;
-  user-select: none;
+  user-select: none !important;
 }
 
-.Component:global(.range .range-cursor) {
-  display:          flex;
+.Component :global(.range-cursor) {
   box-sizing:       border-box;
-  position:         absolute;
-  z-index:          100;
-  transform:        translate(-50%, -50%);
+  position:         absolute !important;
+  z-index:          100 !important;
+  transform:        translate(-50%, -50%) !important;
   background-color: white;
   border:           1px solid black;
 }
 
 /* ----- Horizontal range ----- */
 
-.Component:global(.range[data-vertical="false"]) {
-  flex-flow:    column;
+.Component[data-vertical="false"] {
   grid-row-gap: 10px;
   width:        100%;
 }
 
-.Component:global(.range[data-vertical="false"] .range-bar) {
-  height: var(--range-dimension);
+.Component[data-vertical="false"] {
+  height: 6px;
 }
 
-.Component:global(.range[data-vertical="false"] .range-cursor) {
-  width:  calc(var(--range-dimension) / 2 + 4px);
-  height: calc(var(--range-dimension) + 6px);
-  top:    50%;
+.Component[data-vertical="false"] :global(.range-cursor) {
+  width:  10px;
+  height: 12px;
+  top:    50% !important;
 }
 
 /* ----- Vertical range ----- */
 
-.Component:global(.range[data-vertical="true"]) {
-  flex-flow:       row;
+.Component[data-vertical="true"] {
   grid-column-gap: 10px;
   height:          100%;
 }
 
-.Component:global(.range[data-vertical="true"] .range-bar) {
-  flex:  1 1 auto;
-  width: var(--range-dimension);
+.Component[data-vertical="true"] {
+  width: 6px;
 }
 
-.Component:global(.range[data-vertical="true"] .range-cursor) {
-  width:  calc(var(--range-dimension) + 6px);
-  height: calc(var(--range-dimension) / 2 + 4px);
-  left:   50%;
+.Component[data-vertical="true"] :global(.range-cursor) {
+  width:  10px;
+  height: 12px;
+  left:   50% !important;
 }
 

@@ -1,0 +1,25 @@
+.Component {
+  display:      flex;
+  flex-flow:    column;
+  grid-row-gap: 20px;
+}
+
+.HorizontalList {
+  display:      flex;
+  flex-flow:    column;
+  grid-row-gap: 20px;
+}
+
+.VerticalList {
+  display:         flex;
+  flex-flow:       row;
+  grid-column-gap: 20px;
+}
+
+.Horizontal {
+  width: 500px !important;
+}
+
+.Vertical {
+  height: 500px !important;
+}

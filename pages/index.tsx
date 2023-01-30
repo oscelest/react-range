@@ -1,23 +1,29 @@
-import {Range} from "../src";
 import {useState} from "react";
+import {Range} from "../src";
+import Style from "./index.module.css";
 
 function IndexPage() {
-  const [value, setValue] = useState(50);
-
+  const [valueHorizontal, setValueHorizontal] = useState(25);
+  const [valueVertical, setValueVertical] = useState(5);
+  
   return (
-    <div style={{display: "flex", gridRowGap: "10px", flexFlow: "column", width: "100%", height: "500px"}}>
-      <Range onChange={onHorizontalValueChange} value={value} min={50} max={150}/>
-      <Range onChange={onHorizontalValueChange} value={value} min={50} max={150}>
-        <span>This is a horizontal range indicator</span>
-      </Range>
-      <Range onChange={onHorizontalValueChange} value={value} min={50} max={150} vertical={true}>
-        <span>This is a vertical range indicator</span>
-      </Range>
+    <div className={Style.Component}>
+      <div className={Style.HorizontalList}>
+        <Range className={Style.Horizontal} onChange={onHorizontalValueChange} value={valueHorizontal} min={0} max={50}/>
+        <Range className={Style.Horizontal} onChange={onHorizontalValueChange} value={valueHorizontal} min={50} max={0}/>
+      </div>
+      <div className={Style.VerticalList}>
+        <Range className={Style.Vertical} onChange={onVerticalValueChange} value={valueVertical} min={5} max={15} vertical={true}/>
+        <Range className={Style.Vertical} onChange={onVerticalValueChange} value={valueVertical} min={15} max={5} vertical={true}/>
+      </div>
     </div>
   );
-
+  
   function onHorizontalValueChange(value: number) {
-    setValue(value);
+    setValueHorizontal(value);
+  }
+  function onVerticalValueChange(value: number) {
+    setValueVertical(Math.round(value));
   }
 }
 

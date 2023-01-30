@@ -1,76 +1,80 @@
-import React, {useRef, ReactNode, CSSProperties} from "react";
+import React, {CSSProperties, HTMLProps, useRef} from "react";
 import Style from "./Range.module.css";
 
-function Range(props: RangeProps) {
-  const {min = 0, max = 100, value = min, vertical = false, className, children, onChange, ...component_props} = props;
+export function Range(props: RangeProps) {
+  const {min = 0, max = 100, value = min, vertical = false, className, children, ...component_method_props} = props;
+  const {onChange, onMouseDown, ...component_props} = component_method_props;
+  
   const ref = useRef<HTMLDivElement>(null);
-
+  
+  const lowest = Math.min(min, max);
+  const highest = Math.max(min, max);
+  const span = highest - lowest;
+  const current = Math.min(Math.max(lowest, value), highest);
+  const percentage = ((current - lowest) / span) * 100;
+  
   const cursor_style = {} as CSSProperties;
   if (props.vertical) {
-    cursor_style.top = `${(1 - value / max) * 100}%`;
+    cursor_style.top = `${(max < min ? (100 - percentage) : percentage)}%`;
   }
   else {
-    cursor_style.left = `${value / max * 100}%`;
+    cursor_style.left = `${(max >= min ? percentage : (100 - percentage))}%`;
   }
-
+  
   const classes = [Style.Component, "range"];
   if (props.className) classes.push(props.className);
-
+  
   return (
-    <div {...component_props} className={classes.join(" ")} data-vertical={vertical}>
-      {!!children &&
-        <div className={"range-label"}>
-          {children}
-        </div>
-      }
-      <div className={"range-bar"} ref={ref} onMouseDown={onBarMouseDown}>
-        <div className={"range-cursor"} style={cursor_style}/>
-      </div>
+    <div {...component_props} ref={ref} className={classes.join(" ")} data-vertical={vertical} onMouseDown={onComponentMouseDown}>
+      <div className={"range-cursor"} style={cursor_style}/>
     </div>
   );
-
-  function onBarMouseDown(event: React.MouseEvent<HTMLDivElement>) {
+  
+  function onComponentMouseDown(event: React.MouseEvent<HTMLDivElement>) {
+    onMouseDown?.(event);
+    if (event.defaultPrevented) return;
+    
     window.addEventListener("mousemove", onWindowMouseMove);
     window.addEventListener("mouseup", onWindowMouseUp);
   }
-
+  
   function onWindowMouseMove(event: MouseEvent) {
     updateValue(event);
   }
-
+  
   function onWindowMouseUp(event: MouseEvent) {
     updateValue(event);
     window.removeEventListener("mousemove", onWindowMouseMove);
     window.removeEventListener("mouseup", onWindowMouseUp);
   }
-
+  
   function updateValue(event: MouseEvent) {
     if (!ref.current) return;
+    
     if (props.vertical) {
-      const {top} = ref.current.getBoundingClientRect();
-      const {scrollHeight, clientTop} = ref.current;
-      const y = Math.max(0, Math.min(scrollHeight, event.pageY - top - clientTop));
-      onChange?.((1 - y / scrollHeight) * max);
+      const {top, height} = ref.current.getBoundingClientRect();
+      const cursor_y = Math.min(Math.max(0, event.pageY - top), height);
+      const percentage = cursor_y / height;
+      const actual_percentage = max >= min ? percentage : 1 - percentage;
+      onChange?.(actual_percentage * span + lowest);
     }
     else {
-      const {left} = ref.current.getBoundingClientRect();
-      const {scrollWidth, clientLeft} = ref.current;
-      const x = Math.max(0, Math.min(scrollWidth, event.pageX - left - clientLeft));
-      onChange?.(x / scrollWidth * max);
+      const {left, width} = ref.current.getBoundingClientRect();
+      const cursor_x = Math.min(Math.max(0, event.pageX - left), width);
+      const percentage = cursor_x / width;
+      const actual_percentage = max >= min ? percentage : 1 - percentage;
+      onChange?.(actual_percentage * span + lowest);
     }
   }
 }
 
-export interface RangeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+export interface RangeProps extends Omit<HTMLProps<HTMLDivElement>, "onChange"> {
   min?: number;
   max?: number;
   value?: number;
   vertical?: boolean;
-
-  children?: ReactNode;
-
+  
+  children?: never;
+  
   onChange?(value: number): void;
 }
-
-
-export default Range;
