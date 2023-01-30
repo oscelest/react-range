@@ -1,7 +1,7 @@
 {
   "name": "@noxy/react-range",
   "author": "oscelest",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A simple range input react element.",
   "license": "MIT",
   "repository": {
