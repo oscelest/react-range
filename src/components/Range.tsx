@@ -62,7 +62,7 @@ export function Range(props: RangeProps) {
       const {left, width} = ref.current.getBoundingClientRect();
       const cursor_x = Math.min(Math.max(0, event.pageX - left), width);
       const percentage = cursor_x / width;
-      const actual_percentage = max < min ? percentage : 1 - percentage;
+      const actual_percentage = max >= min ? percentage : 1 - percentage;
       onChange?.(actual_percentage * span + lowest);
     }
   }

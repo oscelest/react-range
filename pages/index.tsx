@@ -20,9 +20,11 @@ function IndexPage() {
   );
   
   function onHorizontalValueChange(value: number) {
+    console.log(value);
     setValueHorizontal(value);
   }
   function onVerticalValueChange(value: number) {
+    console.log(value);
     setValueVertical(Math.round(value));
   }
 }
