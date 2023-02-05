@@ -32,13 +32,13 @@ export default [
       PeerDepsExternal(), // Ensure peer-dependencies are not included in the bundle.
       Resolve(),          // Resolve external libraries and adds them to the bundle.
       CommonJS(),
-      TypeScript({tsconfig: "./tsconfig.build.json"}),
+      TypeScript({tsconfig: "./tsconfig.build.json", outputToFilesystem: true}),
       PostCSS(),
       Terser({sourceMap: true}),
     ],
   },
   {
-    input:    "dist/esm/types/index.d.ts",
+    input:    "dist/esm/index.d.ts",
     output:   [
       {
         file:   Package.types,
