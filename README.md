@@ -4,7 +4,7 @@
 
 `react-range` is a minimalist [React](https://reactjs.org/) functional component which renders a range component.
 The range takes a minimum, maximum, and current value, returning a value depending where the cursor is inside the range bar.
-The component works unidirectionally with minimum and maximum being interchangeable. 
+The component works unidirectionally with minimum and maximum being interchangeable.
 It's minimalist in the sense that it contains only a few classes without being deeply nested elements nor containing many predefined and mandatory CSS properties.
 
 ## Installation
